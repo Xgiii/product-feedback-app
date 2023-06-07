@@ -1,6 +1,6 @@
 'use client';
 
-import { addUser } from '../actions';
+import { addUser } from '../app/actions';
 import Link from 'next/link';
 
 import Spinner from './Spinner';
@@ -67,7 +67,7 @@ function SignUpForm() {
           type='submit'
           className='mt-4 w-full rounded-md bg-purple-600 hover:bg-purple-700 py-2 font-bold text-white'
         >
-          {loading ? <Spinner /> : 'Sign Up'}
+          {loading ? <Spinner size='default' /> : 'Sign Up'}
         </button>
         <p className='text-pink-600 text-center mt-4'>{error?.message}</p>
         <p className='mt-4 text-gray-400 text-center'>

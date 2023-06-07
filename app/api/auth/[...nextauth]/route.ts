@@ -10,7 +10,7 @@ const handler = NextAuth({
   providers: [
     CredentialsProvider({
       name: 'Credentials',
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         const client = await connectToDb();
         const user = await client.db().collection('users').findOne({
           username: credentials?.username,
@@ -21,11 +21,16 @@ const handler = NextAuth({
             _id: user._id,
             username: user.username,
           };
+        } else {
+          throw new Error('Invalid email or password');
         }
-        throw new Error('Invalid email or password');
       },
     }),
   ],
+  pages: {
+    signIn: '/',
+    error: '/',
+  },
 });
 
 export { handler as GET, handler as POST };

@@ -1,11 +1,13 @@
 import React from 'react';
 
-function Spinner() {
+function Spinner({ size }: { size: 'small' | 'default' | 'big' }) {
   return (
     <div role='status'>
       <svg
         aria-hidden='true'
-        className='inline w-6 h-6 mr-2 text-gray-200 animate-spin fill-white'
+        className={`inline ${
+          size === 'small' ? 'w-4 h-4' : size === 'big' ? 'w-10 h-10' : 'w-6 h-6'
+        } mr-2 text-gray-200 animate-spin fill-white`}
         viewBox='0 0 100 101'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'

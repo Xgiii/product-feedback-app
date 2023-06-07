@@ -1,18 +1,39 @@
 'use client';
 
+import { signIn, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import React, { useState } from 'react';
+import Spinner from './Spinner';
+import { useRouter } from 'next/navigation';
 
 function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  async function loginHandler() {
+    setLoading(true);
+    const result = await signIn('credentials', {
+      username,
+      password,
+      redirect: false,
+    });
+
+    if (!result?.error) {
+      setLoading(false);
+      return;
+    }
+    setError(result?.error!);
+    setLoading(false);
+  }
 
   return (
     <div className='bg-white rounded-md p-6 w-[350px]'>
       <h2 className='font-bold text-2xl'>Login</h2>
       <div className='relative mt-4 border rounded-lg'>
         <input
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => (setUsername(e.target.value), setError(''))}
           value={username}
           type='text'
           id='username'
@@ -28,7 +49,7 @@ function LoginForm() {
       </div>
       <div className='relative mt-4 border rounded-lg'>
         <input
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => (setPassword(e.target.value), setError(''))}
           value={password}
           type='password'
           id='password'
@@ -42,9 +63,13 @@ function LoginForm() {
           Password
         </label>
       </div>
-      <button className='mt-4 w-full rounded-md bg-purple-600 hover:bg-purple-700 py-2 font-bold text-white'>
-        Login
+      <button
+        onClick={loginHandler}
+        className='mt-4 w-full rounded-md bg-purple-600 hover:bg-purple-700 py-2 font-bold text-white'
+      >
+        {loading ? <Spinner size='default' /> : 'Login'}
       </button>
+      <p className='text-pink-600 text-center mt-4'>{error}</p>
       <p className='mt-4 text-gray-400 text-center'>
         Doesn&apos;t have an account?{' '}
         <Link href='/enter' className='font-bold text-purple-600'>

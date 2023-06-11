@@ -1,6 +1,5 @@
+import { categories } from '@/utils';
 import React from 'react';
-
-const categories = ['All', 'UI', 'UX', 'Enhancement', 'Bug', 'Feature'];
 
 function FiltersTile() {
   return (
@@ -8,7 +7,7 @@ function FiltersTile() {
       {categories.map((category, index) => (
         <div
           key={index}
-          className='bg-gray-100 hover:text-white hover:bg-blue-600 transition-all self-start font-bold text-sm rounded-lg text-blue-600 px-4 py-2 mr-3 mt-3 cursor-pointer'
+          className='bg-gray-100 hover:text-white hover:bg-blue-600 transition-all self-start font-bold text-sm rounded-lg text-blue-600 px-3 lg:px-4 py-2 lg:mr-3 lg:mt-3 mr-2 mt-2 cursor-pointer'
         >
           {category}
         </div>

@@ -49,6 +49,9 @@ export async function addFeedback(formData: FormData) {
   const details = formData.get('details') as string;
   const uid = new ObjectId(session?.user._id);
 
+  let createdAt: string | number = Date.now();
+  createdAt = new Intl.DateTimeFormat('en-US').format(createdAt);
+
   if (!title || !category || !details || !uid) {
     throw new Error('Invalid input');
   }
@@ -58,6 +61,7 @@ export async function addFeedback(formData: FormData) {
     category,
     details,
     uid,
+    createdAt,
   });
 
   client.close();

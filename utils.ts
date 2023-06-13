@@ -5,4 +5,5 @@ export async function connectToDb() {
   return client;
 }
 
-export const categories = ['All', 'UI', 'UX', 'Enhancement', 'Bug', 'Feature'];
+export const categories = ['UI', 'UX', 'Enhancement', 'Bug', 'Feature'];
+export const filters = ['All', 'UI', 'UX', 'Enhancement', 'Bug', 'Feature'];

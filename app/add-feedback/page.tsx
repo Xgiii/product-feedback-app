@@ -3,11 +3,15 @@ import MainBtn from '@/components/MainBtn';
 import SecondaryBtn from '@/components/SecondaryBtn';
 import { categories } from '@/utils';
 import Link from 'next/link';
+import { addFeedback } from '../actions';
 
 function AddFeedbackPage() {
   return (
     <AuthCheck>
-      <form className='flex flex-col space-y-8 mx-auto my-10 w-[90vw] rounded-lg p-6 bg-white sm:w-[600px]'>
+      <form
+        action={addFeedback}
+        className='flex flex-col space-y-8 mx-auto my-10 w-[90vw] rounded-lg p-6 bg-white sm:w-[600px]'
+      >
         <h1 className='text-2xl font-bold text-gray-800'>
           Create New Feedback
         </h1>

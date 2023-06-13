@@ -1,11 +1,23 @@
 import { connectToDb } from '@/utils';
 import { compareSync } from 'bcrypt';
-import NextAuth from 'next-auth';
+import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
-const handler = NextAuth({
+export const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
+  },
+  callbacks: {
+    async jwt({ token, user }: any) {
+      if (user?._id) token._id = user._id;
+      if (user?.username) token.username = user.username;
+      return token;
+    },
+    async session({ session, token }: any) {
+      if (token?._id) session.user._id = token._id;
+      if (token?.username) session.user.username = token.username;
+      return session;
+    },
   },
   providers: [
     CredentialsProvider({
@@ -31,6 +43,8 @@ const handler = NextAuth({
     signIn: '/',
     error: '/',
   },
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

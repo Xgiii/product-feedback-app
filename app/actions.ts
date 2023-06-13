@@ -2,7 +2,11 @@
 
 import { connectToDb } from '@/utils';
 import { hashSync } from 'bcrypt';
+import { getServerSession } from 'next-auth';
+import { getSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
+import { authOptions } from './api/auth/[...nextauth]/route';
+import { ObjectId } from 'mongodb';
 
 export async function addUser(formData: FormData) {
   const client = await connectToDb();
@@ -32,5 +36,30 @@ export async function addUser(formData: FormData) {
   });
 
   client.close();
-  redirect('/')
+  redirect('/');
+}
+
+export async function addFeedback(formData: FormData) {
+  const session = await getServerSession(authOptions);
+  const client = await connectToDb();
+  const feedbackCol = client.db().collection('feedback');
+
+  const title = formData.get('title') as string;
+  const category = formData.get('category') as string;
+  const details = formData.get('details') as string;
+  const uid = new ObjectId(session?.user._id);
+
+  if (!title || !category || !details || !uid) {
+    throw new Error('Invalid input');
+  }
+
+  await feedbackCol.insertOne({
+    title,
+    category,
+    details,
+    uid,
+  });
+
+  client.close();
+  redirect('/home');
 }

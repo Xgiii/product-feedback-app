@@ -5,7 +5,10 @@ import Spinner from './Spinner';
 import { redirect } from 'next/navigation';
 
 function AuthCheck({ children }: { children: React.ReactNode }) {
-  const { status } = useSession();
+  const { status, data: session } = useSession();
+
+  console.log(session?.user);
+  
 
   if (status === 'unauthenticated') {
     redirect('/');

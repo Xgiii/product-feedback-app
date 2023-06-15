@@ -6,8 +6,12 @@ function Spinner({ size }: { size: 'small' | 'default' | 'big' }) {
       <svg
         aria-hidden='true'
         className={`inline ${
-          size === 'small' ? 'w-4 h-4' : size === 'big' ? 'w-10 h-10' : 'w-6 h-6'
-        } mr-2 text-gray-200 animate-spin fill-white`}
+          size === 'small'
+            ? 'w-4 h-4'
+            : size === 'big'
+            ? 'w-10 h-10'
+            : 'w-6 h-6'
+        } text-gray-200 animate-spin fill-white`}
         viewBox='0 0 100 101'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'

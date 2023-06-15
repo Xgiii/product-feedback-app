@@ -7,5 +7,5 @@ export interface Feedback {
   details: string;
   uid: ObjectId;
   createdAt: Date;
-  upvotes?: ObjectId[];
+  upvotes?: string[];
 }

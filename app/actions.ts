@@ -3,10 +3,11 @@
 import { connectToDb } from '@/utils';
 import { hashSync } from 'bcrypt';
 import { getServerSession } from 'next-auth';
-import { getSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import { authOptions } from './api/auth/[...nextauth]/route';
 import { ObjectId } from 'mongodb';
+import { Feedback } from '@/types/models';
+import { revalidatePath } from 'next/cache';
 
 export async function addUser(formData: FormData) {
   const client = await connectToDb();
@@ -66,4 +67,33 @@ export async function addFeedback(formData: FormData) {
 
   client.close();
   redirect('/home');
+}
+
+export async function upvote(id: string, uid: string) {
+  const client = await connectToDb();
+  const feedbackCol = client.db().collection<Feedback>('feedback');
+
+  const feedback = await feedbackCol.findOne({ _id: new ObjectId(id) });
+
+  if (!feedback) {
+    throw new Error('Something went wrong');
+  }
+
+  console.log(feedback.upvotes);
+  
+
+  if (feedback.upvotes?.find((id) => id === uid)) {
+    await feedbackCol.updateOne(
+      { _id: new ObjectId(id) },
+      { $pull: { upvotes: uid } }
+    );
+  } else {
+    await feedbackCol.updateOne(
+      { _id: new ObjectId(id) },
+      { $push: { upvotes: uid } }
+    );
+  }
+
+  revalidatePath('/home');
+  client.close();
 }

@@ -5,19 +5,13 @@ import FiltersTile from '@/components/FiltersTile';
 import RoadmapTile from '@/components/RoadmapTile';
 import SuggestionsBanner from '@/components/SuggestionsBanner';
 import { Feedback } from '@/types/models';
-import { connectToDb } from '@/utils';
+import { getFeedbackList } from '@/utils';
 import React from 'react';
 
-async function getFeedbackList() {
-  const client = await connectToDb();
-  const feedbackCol = client.db().collection<Feedback>('feedback');
-  const feedbackList = await feedbackCol.find({}).toArray();
-  client.close();
-  return feedbackList;
-}
-
 async function HomePage() {
-  const feedbackList: Feedback[] = await getFeedbackList();
+  const feedbackList: Feedback[] = JSON.parse(
+    JSON.stringify(await getFeedbackList())
+  );
 
   return (
     <AuthCheck>

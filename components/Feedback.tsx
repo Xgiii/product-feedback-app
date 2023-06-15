@@ -39,15 +39,13 @@ function Feedback({ feedback }: { feedback: Feedback }) {
           }}
           className={`rounded-lg flex flex-col items-center justify-center self-center h-12 w-8 cursor-pointer group ${
             active
-              ? 'bg-blue-600 text-white hover:text-black hover:bg-gray-100'
-              : 'bg-gray-100  hover:bg-blue-600 hover:text-white'
+              ? 'bg-blue-600 text-white hover:bg-blue-500'
+              : 'bg-gray-100'
           }  transition-all`}
         >
           <p
             className={`${
-              active
-                ? 'text-white group-hover:text-blue-600'
-                : 'text-blue-600 group-hover:text-white'
+              active ? 'text-white' : 'text-blue-600'
             }  text-xl leading-3 pt-2 font-bold`}
           >
             ^

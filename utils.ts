@@ -9,10 +9,18 @@ export async function connectToDb() {
 export const categories = ['UI', 'UX', 'Enhancement', 'Bug', 'Feature'];
 export const filters = ['All', 'UI', 'UX', 'Enhancement', 'Bug', 'Feature'];
 
-export async function getFeedbackList() {
+export async function getFeedbackList(
+  cat: 'All' | 'UI' | 'UX' | 'Enhancement' | 'Bug' | 'Feature'
+) {
   const client = await connectToDb();
   const feedbackCol = client.db().collection<Feedback>('feedback');
-  const feedbackList = await feedbackCol.find({}).toArray();
+  let feedbackList: Feedback[] = [];
+
+  if (!cat || cat === 'All') {
+    feedbackList = await feedbackCol.find({}).toArray();
+  } else {
+    feedbackList = await feedbackCol.find({ category: cat }).toArray();
+  }
   client.close();
   return feedbackList;
 }

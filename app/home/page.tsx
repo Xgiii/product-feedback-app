@@ -8,10 +8,16 @@ import { Feedback } from '@/types/models';
 import { getFeedbackList } from '@/utils';
 import React from 'react';
 
-async function HomePage() {
+async function HomePage({
+  searchParams,
+}: {
+  searchParams: {
+    cat: 'All' | 'UI' | 'UX' | 'Enhancement' | 'Bug' | 'Feature';
+  };
+}) {
   const feedbackList: Feedback[] = JSON.parse(
-    JSON.stringify(await getFeedbackList())
-  );
+    JSON.stringify(await getFeedbackList(searchParams?.cat))
+  )
 
   return (
     <AuthCheck>

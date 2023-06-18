@@ -10,4 +10,8 @@ declare module 'next-auth' {
       username: string;
     };
   }
+  interface User {
+    _id: any;
+    username: any;
+  }
 }

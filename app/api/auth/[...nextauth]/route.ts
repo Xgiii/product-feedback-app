@@ -22,6 +22,19 @@ export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: 'Credentials',
+      credentials: {
+        username: {
+          label: 'Username',
+          type: 'text',
+          placeholder: 'johndoe@domain.com',
+        },
+        password: {
+          label: 'Password',
+          type: 'password',
+          placeholder: 'verysecurepassword',
+        },
+      },
+
       async authorize(credentials) {
         const client = await connectToDb();
         const user = await client.db().collection('users').findOne({
@@ -32,7 +45,7 @@ export const authOptions: NextAuthOptions = {
           return {
             _id: user._id,
             username: user.username,
-          };
+          } as any;
         } else {
           throw new Error('Invalid email or password');
         }

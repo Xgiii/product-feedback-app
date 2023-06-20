@@ -13,7 +13,7 @@ function Feedback({ feedback }: { feedback: Feedback }) {
   const { data: session } = useSession();
   const [optimisticUpvotes, addOptimisticUpvotes] = useOptimistic(
     {
-      upvotesCount: feedback.upvotes ? feedback.upvotes.length : 0,
+      upvotesCount: feedback.upvotesNum,
     },
     (state, newUpvotesCount: number) => ({
       ...state,
@@ -38,9 +38,7 @@ function Feedback({ feedback }: { feedback: Feedback }) {
             await upvote(feedback._id.toString(), session?.user._id!);
           }}
           className={`rounded-lg flex flex-col items-center justify-center self-center h-12 min-w-[2rem] cursor-pointer group ${
-            active
-              ? 'bg-blue-600 text-white hover:bg-blue-500'
-              : 'bg-gray-100'
+            active ? 'bg-blue-600 text-white hover:bg-blue-500' : 'bg-gray-100'
           }  transition-all`}
         >
           <p

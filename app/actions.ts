@@ -49,6 +49,7 @@ export async function addFeedback(formData: FormData) {
   const category = formData.get('category') as string;
   const details = formData.get('details') as string;
   const uid = new ObjectId(session?.user._id);
+  const upvotesNum = 0;
 
   const createdAt = new Date();
 
@@ -62,6 +63,7 @@ export async function addFeedback(formData: FormData) {
     details,
     uid,
     createdAt,
+    upvotesNum,
   });
 
   client.close();
@@ -81,12 +83,12 @@ export async function upvote(id: string, uid: string) {
   if (feedback.upvotes?.find((id) => id === uid)) {
     await feedbackCol.updateOne(
       { _id: new ObjectId(id) },
-      { $pull: { upvotes: uid } }
+      { $pull: { upvotes: uid }, $inc: { upvotesNum: -1 } }
     );
   } else {
     await feedbackCol.updateOne(
       { _id: new ObjectId(id) },
-      { $push: { upvotes: uid } }
+      { $push: { upvotes: uid }, $inc: { upvotesNum: 1 } }
     );
   }
 

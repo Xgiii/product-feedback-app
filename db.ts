@@ -23,10 +23,10 @@ export async function getFeedbackList(
       sortObj = { _id: -1 };
       break;
     case 'Most Upvotes':
-      sortObj = { upvotes: -1 };
+      sortObj = { upvotesNum: -1 };
       break;
     case 'Least Upvotes':
-      sortObj = { upvotes: 1 };
+      sortObj = { upvotesNum: 1 };
       break;
     default:
       sortObj = { _id: 1 };
@@ -41,6 +41,8 @@ export async function getFeedbackList(
       .sort(sortObj)
       .toArray();
   }
+  console.log(feedbackList);
+
   client.close();
   return feedbackList;
 }

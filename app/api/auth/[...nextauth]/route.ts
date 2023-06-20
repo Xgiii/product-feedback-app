@@ -1,4 +1,4 @@
-import { connectToDb } from '@/utils';
+import { connectToDb } from '@/db';
 import { compareSync } from 'bcrypt';
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';

@@ -4,8 +4,8 @@ import FeedbackList from '@/components/FeedbackList';
 import FiltersTile from '@/components/FiltersTile';
 import RoadmapTile from '@/components/RoadmapTile';
 import SuggestionsBanner from '@/components/SuggestionsBanner';
+import { getFeedbackList } from '@/db';
 import { Feedback } from '@/types/models';
-import { getFeedbackList } from '@/utils';
 import React from 'react';
 
 async function HomePage({
@@ -13,11 +13,12 @@ async function HomePage({
 }: {
   searchParams: {
     cat: 'All' | 'UI' | 'UX' | 'Enhancement' | 'Bug' | 'Feature';
+    sort: 'Oldest' | 'Newest' | 'Most Upvotes' | 'Least Upvotes';
   };
 }) {
   const feedbackList: Feedback[] = JSON.parse(
-    JSON.stringify(await getFeedbackList(searchParams?.cat))
-  )
+    JSON.stringify(await getFeedbackList(searchParams?.cat, searchParams?.sort))
+  );
 
   return (
     <AuthCheck>

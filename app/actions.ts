@@ -1,6 +1,5 @@
 'use server';
 
-import { connectToDb } from '@/utils';
 import { hashSync } from 'bcrypt';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
@@ -8,6 +7,7 @@ import { authOptions } from './api/auth/[...nextauth]/route';
 import { ObjectId } from 'mongodb';
 import { Feedback } from '@/types/models';
 import { revalidatePath } from 'next/cache';
+import { connectToDb } from '@/db';
 
 export async function addUser(formData: FormData) {
   const client = await connectToDb();
@@ -50,8 +50,7 @@ export async function addFeedback(formData: FormData) {
   const details = formData.get('details') as string;
   const uid = new ObjectId(session?.user._id);
 
-  let createdAt: string | number = Date.now();
-  createdAt = new Intl.DateTimeFormat('en-US').format(createdAt);
+  const createdAt = new Date();
 
   if (!title || !category || !details || !uid) {
     throw new Error('Invalid input');
@@ -78,9 +77,6 @@ export async function upvote(id: string, uid: string) {
   if (!feedback) {
     throw new Error('Something went wrong');
   }
-
-  console.log(feedback.upvotes);
-  
 
   if (feedback.upvotes?.find((id) => id === uid)) {
     await feedbackCol.updateOne(

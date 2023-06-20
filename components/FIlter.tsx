@@ -7,10 +7,13 @@ function Filter({ filter }: { filter: string }) {
   const searchParams = useSearchParams();
 
   const activeCat = searchParams.get('cat');
+  const sortOption = searchParams.get('sort');
 
   return (
     <div
-      onClick={() => router.push(`/home?cat=${filter}`)}
+      onClick={() =>
+        router.push(`/home?cat=${filter}&sort=${sortOption || 'Oldest'}`)
+      }
       className={`${
         activeCat === filter
           ? 'text-white bg-blue-600'

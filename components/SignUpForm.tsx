@@ -40,6 +40,7 @@ function SignUpForm() {
             name='username'
             className='block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
             placeholder=' '
+            required
           />
           <label
             htmlFor='username'
@@ -55,6 +56,8 @@ function SignUpForm() {
             name='password'
             className='block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
             placeholder=' '
+            required
+            minLength={6}
           />
           <label
             htmlFor='password'

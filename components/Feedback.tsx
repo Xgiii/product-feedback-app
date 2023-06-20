@@ -26,7 +26,7 @@ function Feedback({ feedback }: { feedback: Feedback }) {
 
   return (
     <div className='bg-white rounded-lg p-6 flex items-center justify-between'>
-      <div className='flex space-x-10'>
+      <div className='flex space-x-6'>
         <div
           onClick={async () => {
             setActive((prevState) => !prevState);
@@ -37,7 +37,7 @@ function Feedback({ feedback }: { feedback: Feedback }) {
             );
             await upvote(feedback._id.toString(), session?.user._id!);
           }}
-          className={`rounded-lg flex flex-col items-center justify-center self-center h-12 w-8 cursor-pointer group ${
+          className={`rounded-lg flex flex-col items-center justify-center self-center h-12 min-w-[2rem] cursor-pointer group ${
             active
               ? 'bg-blue-600 text-white hover:bg-blue-500'
               : 'bg-gray-100'

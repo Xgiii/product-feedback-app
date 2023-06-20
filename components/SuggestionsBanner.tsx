@@ -1,9 +1,26 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import MainBtn from './MainBtn';
+import { sortingOptions } from '@/utils';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 function SuggestionsBanner({ suggestions }: { suggestions: number }) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const activeSortOption = searchParams.get('sort') || sortingOptions[0];
+  const activeCat = searchParams.get('cat');
+
+  const [sortOption, setSortOption] = useState(activeSortOption);
+
+  function sortOptionChangeHandler(e: React.ChangeEvent<HTMLSelectElement>) {
+    router.push(`/home?cat=${activeCat || 'All'}&sort=${e.target.value}`);
+    setSortOption(e.target.value);
+  }
+
   return (
     <div className='bg-indigo-950 w-full sm:h-16 rounded-lg flex flex-col sm:flex-row items-center justify-between py-4 px-6 text-white'>
       <div className='flex items-center'>
@@ -15,10 +32,18 @@ function SuggestionsBanner({ suggestions }: { suggestions: number }) {
           className='mr-3 hidden sm:block'
         />
         <p className='font-bold hidden sm:block'>{suggestions} Suggestions</p>
-        <p className='text-gray-300 sm:ml-4 text-sm'>Sort by:</p>
-        <p className='text-gray-100 font-semibold ml-1 text-sm'>
-          Most Upvotes &#8910;
-        </p>
+        <div className='flex items-start'>
+          <p className='text-gray-300 sm:ml-4 text-sm'>Sort by:</p>
+          <select
+            onChange={sortOptionChangeHandler}
+            value={sortOption}
+            className='bg-transparent text-sm ml-2 outline-none'
+          >
+            {sortingOptions.map((option) => (
+              <option key={option}>{option}</option>
+            ))}
+          </select>
+        </div>
       </div>
       <Link className='w-full sm:w-auto' href='/add-feedback'>
         <MainBtn className='mt-4 sm:mt-0'>+ Add Feedback</MainBtn>

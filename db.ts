@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import { Feedback } from './types/models';
 
 export async function connectToDb() {
@@ -45,4 +45,16 @@ export async function getFeedbackList(
 
   client.close();
   return feedbackList;
+}
+
+export async function getFeedbackById(id: string) {
+  const client = await connectToDb();
+
+  const feedbackCol = client.db().collection<Feedback>('feedback');
+  const feedback = await feedbackCol.findOne({ _id: new ObjectId(id) });
+  client.close();
+  if (!feedback) {
+    throw new Error('No feedback found');
+  }
+  return feedback;
 }

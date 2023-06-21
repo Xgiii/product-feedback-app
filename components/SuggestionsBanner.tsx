@@ -46,7 +46,9 @@ function SuggestionsBanner({ suggestions }: { suggestions: number }) {
         </div>
       </div>
       <Link className='w-full sm:w-auto' href='/add-feedback'>
-        <MainBtn className='mt-4 sm:mt-0'>+ Add Feedback</MainBtn>
+        <MainBtn className='mt-4 sm:mt-0 w-full sm:w-auto'>
+          + Add Feedback
+        </MainBtn>
       </Link>
     </div>
   );

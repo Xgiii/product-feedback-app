@@ -13,7 +13,7 @@ function MainBtn({
     <button
       onClick={onClick}
       className={
-        'rounded-md w-full sm:w-auto text-sm bg-purple-600 hover:bg-purple-700 py-2 px-4 font-bold text-white ' +
+        'rounded-md text-sm bg-purple-600 hover:bg-purple-700 py-2 px-4 font-bold text-white ' +
         className
       }
     >

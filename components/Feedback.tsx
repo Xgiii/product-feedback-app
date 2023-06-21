@@ -8,6 +8,7 @@ import React, {
 import Category from './Category';
 import { upvote } from '@/app/actions';
 import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 
 function Feedback({ feedback }: { feedback: Feedback }) {
   const { data: session } = useSession();
@@ -52,11 +53,14 @@ function Feedback({ feedback }: { feedback: Feedback }) {
             {optimisticUpvotes.upvotesCount}
           </p>
         </div>
-        <div className='flex flex-col'>
+        <Link
+          href={`/feedback/${feedback._id}`}
+          className='flex flex-col cursor-pointer'
+        >
           <h2 className='font-bold text-gray-800'>{feedback.title}</h2>
           <p className='text-gray-500 text-sm mt-1'>{feedback.details}</p>
           <Category category={feedback.category} />
-        </div>
+        </Link>
       </div>
     </div>
   );

@@ -10,3 +10,12 @@ export interface Feedback {
   upvotesNum: number;
   upvotes?: string[];
 }
+
+export interface Comment {
+  _id: ObjectId;
+  feedbackId: ObjectId;
+  uid: ObjectId;
+  content: string;
+  createdAt: Date;
+  ancestor: ObjectId;
+}

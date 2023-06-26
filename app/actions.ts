@@ -95,3 +95,29 @@ export async function upvote(id: string, uid: string) {
   revalidatePath('/home');
   client.close();
 }
+
+export async function addComment(
+  formData: FormData,
+  feedbackId: string,
+  uid: string,
+  ancestor?: string
+) {
+  const client = await connectToDb();
+
+  const content = formData.get('comment') as string;
+  const commentsCol = client.db().collection<Comment>('comments');
+
+  if (!client || !uid || !content) {
+    throw new Error('Invalid input');
+  }
+
+  await commentsCol.insertOne({
+    feedbackId: new ObjectId(feedbackId),
+    createdAt: new Date(),
+    uid: new ObjectId(uid),
+    content,
+    ancestor,
+  });
+
+  revalidatePath(`/feedback/${feedbackId}`);
+}

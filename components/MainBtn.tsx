@@ -5,7 +5,7 @@ function MainBtn({
   className,
   onClick,
 }: {
-  children: string;
+  children: React.ReactNode;
   className?: string;
   onClick?: () => void;
 }) {

@@ -17,7 +17,7 @@ async function FeedbackPage({ params }: { params: { feedbackId: string } }) {
         <FeedbackDetailNav feedbackUid={feedback.uid} />
         <Feedback feedback={feedback} />
         <CommentFeed />
-        <AddComment />
+        <AddComment feedbackId={params.feedbackId} />
       </div>
     </AuthCheck>
   );

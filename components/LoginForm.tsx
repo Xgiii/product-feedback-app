@@ -12,7 +12,10 @@ function LoginForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  async function loginHandler() {
+  async function loginHandler(
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) {
+    e.preventDefault();
     setLoading(true);
     const result = await signIn('credentials', {
       username,
@@ -29,7 +32,7 @@ function LoginForm() {
   }
 
   return (
-    <div className='bg-white rounded-md p-6 w-[350px]'>
+    <form className='bg-white rounded-md p-6 w-[350px]'>
       <h2 className='font-bold text-2xl'>Login</h2>
       <div className='relative mt-4 border rounded-lg'>
         <input
@@ -76,7 +79,7 @@ function LoginForm() {
           Sign up!
         </Link>
       </p>
-    </div>
+    </form>
   );
 }
 

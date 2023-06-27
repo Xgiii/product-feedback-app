@@ -16,7 +16,7 @@ async function FeedbackPage({ params }: { params: { feedbackId: string } }) {
       <div className='mx-auto py-10 w-[85vw] lg:w-[768px]'>
         <FeedbackDetailNav feedbackUid={feedback.uid} />
         <Feedback feedback={feedback} />
-        <CommentFeed />
+        <CommentFeed feedbackId={params.feedbackId} />
         <AddComment feedbackId={params.feedbackId} />
       </div>
     </AuthCheck>

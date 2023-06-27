@@ -5,7 +5,7 @@ import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { authOptions } from './api/auth/[...nextauth]/route';
 import { ObjectId } from 'mongodb';
-import { Feedback } from '@/types/models';
+import { Comment, Feedback } from '@/types/models';
 import { revalidatePath } from 'next/cache';
 import { connectToDb } from '@/db';
 
@@ -100,7 +100,7 @@ export async function addComment(
   formData: FormData,
   feedbackId: string,
   uid: string,
-  ancestor?: string
+  ancestor?: ObjectId
 ) {
   const client = await connectToDb();
 
@@ -116,7 +116,7 @@ export async function addComment(
     createdAt: new Date(),
     uid: new ObjectId(uid),
     content,
-    ancestor,
+    ancestor: ancestor || null,
   });
 
   revalidatePath(`/feedback/${feedbackId}`);

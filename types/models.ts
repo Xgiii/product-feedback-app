@@ -12,10 +12,10 @@ export interface Feedback {
 }
 
 export interface Comment {
-  _id: ObjectId;
+  _id?: ObjectId;
   feedbackId: ObjectId;
   uid: ObjectId;
   content: string;
   createdAt: Date;
-  ancestor: ObjectId;
+  ancestor: ObjectId | null;
 }

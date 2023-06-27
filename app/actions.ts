@@ -99,22 +99,22 @@ export async function upvote(id: string, uid: string) {
 export async function addComment(
   formData: FormData,
   feedbackId: string,
-  uid: string,
-  ancestor?: ObjectId
+  author: string,
+  ancestor?: string
 ) {
   const client = await connectToDb();
 
   const content = formData.get('comment') as string;
   const commentsCol = client.db().collection<Comment>('comments');
 
-  if (!client || !uid || !content) {
+  if (!client || !author || !content) {
     throw new Error('Invalid input');
   }
 
   await commentsCol.insertOne({
     feedbackId: new ObjectId(feedbackId),
     createdAt: new Date(),
-    uid: new ObjectId(uid),
+    author,
     content,
     ancestor: ancestor || null,
   });

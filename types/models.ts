@@ -14,8 +14,8 @@ export interface Feedback {
 export interface Comment {
   _id?: ObjectId;
   feedbackId: ObjectId;
-  uid: ObjectId;
+  author: string;
   content: string;
   createdAt: Date;
-  ancestor: ObjectId | null;
+  ancestor: string | null;
 }

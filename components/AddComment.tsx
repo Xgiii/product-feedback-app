@@ -21,7 +21,7 @@ function AddComment({ feedbackId }: { feedbackId: string }) {
           setError('');
           try {
             startTransition(() =>
-              addComment(formData, feedbackId, session?.user?._id!)
+              addComment(formData, feedbackId, session?.user.username!)
             );
             setComment('');
             setCharsLeft(250);

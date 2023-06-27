@@ -16,15 +16,16 @@ async function getComments(feedbackId: string) {
 
 async function CommentFeed({ feedbackId }: { feedbackId: string }) {
   const comments = await getComments(feedbackId);
-  console.log(comments);
+  const mainComments = comments.filter((comment) => !comment.ancestor);
+  const replies = comments.filter((comment) => comment.ancestor);
 
   return (
     <div className='mt-6 bg-white rounded-lg p-6'>
       <h2 className='text-xl font-semibold'>
-        {comments.length} {comments.length === 1 ? 'Comment' : 'Comments'}
+        {mainComments.length} {comments.length === 1 ? 'Comment' : 'Comments'}
       </h2>
-      {comments.map((comment) => (
-        <Comment key={comment._id.toString()} comment={comment} />
+      {mainComments.map((comment) => (
+        <Comment replies={(replies)} key={comment._id.toString()} comment={comment} />
       ))}
     </div>
   );

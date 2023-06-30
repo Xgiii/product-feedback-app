@@ -20,9 +20,9 @@ function Comment({
   const [isPending, startTransition] = useTransition();
   const { data: session } = useSession();
 
-  const commentReplies = replies.filter(
-    (reply) => reply.ancestor === comment.author
-  );
+  const commentReplies = replies
+    .filter((reply) => reply.ancestor === comment.author)
+    .sort((a: any, b: any) => a.createdAt - b.createdAt);
 
   const dateOptions: any = {
     year: 'numeric',

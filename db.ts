@@ -41,7 +41,6 @@ export async function getFeedbackList(
       .sort(sortObj)
       .toArray();
   }
-  console.log(feedbackList);
 
   client.close();
   return feedbackList;
